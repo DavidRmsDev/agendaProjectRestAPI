@@ -49,13 +49,14 @@ public class UsuarioController {
     
     //Registra un nuevo usuario
     @PostMapping("/registro")
-    public void registro(@RequestParam(value = "nickname")String nickname,
+    public boolean registro(@RequestParam(value = "nickname")String nickname,
             @RequestParam(value = "password")String password){
         
         try{
             if(usuarioService.crearUsuario(nickname, password) == 0)
                 throw new ResourceNotFoundException("El usuario no ha podido crearse correctamente");
-            
+            else
+                return true;
         }catch(DataIntegrityViolationException ex){
             throw new ResourceNotFoundException("El nickname ya existe");
         }
